@@ -160,38 +160,20 @@ if( x == 1)
 }
 
 /*
- * This function displays Running: on the first row of the LCD display.
+ * This function displays "Enter" on the first row of the LCD display.
  */
-void lcdRunState()
+void lcdEnterState()
 {
     clearLCD();
-    printStringLCD("Running:");
+    printStringLCD("Enter");
 }
 
 /*
- * This function displays Stopped: on the first row of the LCD display.
+ * This function displays "Set Mode" on the first row of the LCD display.
  */
-void lcdStopState()
+void lcdSetModeState()
 {
     clearLCD();
-    printStringLCD("Stopped:");
-}
-
-/*
- * This function will move the cursor to the second row of the LCD
- * and display the time of the stopwatch on the LCD. Then it will increment the correct
- * time after each .01 second.
- */
-void getTimeString(int minTens, int min, int secTens, int sec, int tenth, int hundredth)
-{
+    printStringLCD("Set Mode");
     moveCursorLCD(1,0);
-    printCharLCD('0' + minTens);
-    printCharLCD('0' + min);
-    printCharLCD(':');
-    printCharLCD('0' + secTens);
-    printCharLCD('0' + sec);
-    printCharLCD(':');
-    printCharLCD('0' + tenth);
-    printCharLCD('0' + hundredth);
-
 }
