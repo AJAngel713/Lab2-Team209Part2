@@ -60,6 +60,10 @@ char scanKeypad(void){
     };
      */
     int numKeyPress = 0;
+    ROW1 = 1;
+    ROW2 = 1;
+    ROW3 = 1;
+    ROW4 = 1;
 
     ROW1 = 0;
     if (COL1 == 0){

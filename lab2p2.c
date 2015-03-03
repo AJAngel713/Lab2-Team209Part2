@@ -34,6 +34,7 @@ typedef enum stateTypeEnum
 volatile stateType curState;
 bool setMode = false;
 char keyToWrite = -1;
+int numOfPasswords = 1;
 char passwords[4][4] = {{'1','2','3','4'},
                        {'x','x','x','x'},
                        {'x','x','x','x'},
@@ -44,11 +45,11 @@ int inputsIndex = 0;
 
 bool stringEqual(char* string1, char* string2, int size);
 bool isPassword();
+bool isValid();
 
 /*
- * TODO: 1. Implement Set Mode
+ * TODO: 
  *       2. Implement displaying "Bad" when '#' is pressed.
- *       3. Implement isValid Function.
  *       4. Implement functionality for when '*' is the first key pressed
  *          a. (Allow second key to be pressed)
  *          b. (when any key other than a socond '*' is entered display Bad.
@@ -90,6 +91,19 @@ int main(void)
                     if (isPassword()) printStringLCD("Good");
                     else printStringLCD("Bad");
                     delayMs(2000);
+                }
+                // Set Mode
+                else if (setMode && inputsIndex == 3){
+                    if (isValid()){
+                        clearLCD();
+                        printStringLCD("Valid");
+                        delayMs(2000);
+                    }
+                    else {
+                        clearLCD();
+                        printStringLCD("Invalid");
+                        delayMs(2000);
+                    }
                 }
                 else curState = wait;
                 break;
@@ -159,6 +173,31 @@ bool isPassword()
         }
     }
 
+    return result;
+}
+
+/*
+ * This function checks whether a password the user entered is valid and then stores it in the next password slot. <- Returns true
+ * A valid password contains only numbers.
+ * Invalid means the user entered '*' or '#'
+ * When invalid the function returns false and does not store the password.
+ */
+bool isValid(){
+    bool result = true;
+
+    for (int i = 0; i < 4; i++){
+        if (inputs[i] == '*' || inputs[i] == '#'){
+            result = false;
+        }
+    }
+
+    if (result){
+        numOfPasswords = numOfPasswords%4 + 1;
+        for (int i = 0; i < 4; i++){
+            passwords[numOfPasswords-1] = inputs[i];
+        }
+    }
+    
     return result;
 }
 
