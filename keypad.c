@@ -18,11 +18,11 @@ void initKeypad(void){
     TRISBbits.TRISB2 = OUTPUT; // row 3, output. Pin 6
     TRISBbits.TRISB3 = OUTPUT; // row 4, output. Pin 7
 
-    ODCAbits.ODA0 = 1; // Open Drain collecctor for pins 2, 3, 6, 7 
+    ODCAbits.ODA0 = 1; // Open Drain collecctor for pins 2, 3, 6, 7
     ODCAbits.ODA1 = 1;
     ODCBbits.ODB2 = 1;
     ODCBbits.ODB3 = 1;
-    
+
     // COLUMNS
     TRISBbits.TRISB9 = INPUT; // column 1, input. Pin 18
     TRISBbits.TRISB10 = INPUT; // column 2, input. Pin 21
@@ -32,12 +32,13 @@ void initKeypad(void){
     CNPU2bits.CN16PUE = 1;
     CNPU1bits.CN15PUE = 1;
 
-    IFS1BITS.CNIF = 0;     // Interrupt Flag pulled down.
-    IEC1BITS.CNIE = 1;     // Enable change notification interrupt.
+    IFS1bits.CNIF = 0;     // Interrupt Flag pulled down.
 
     CNEN2bits.CN21IE = 1; // Pin 18 Change Notification Interrupt Enable for each input pin.
     CNEN2bits.CN16IE = 1; // Pin 21
     CNEN1bits.CN15IE = 1; // Pin 22
+
+    IEC1bits.CNIE = 1;     // Enable change notification interrupt.
 
 
 
@@ -50,22 +51,18 @@ void initKeypad(void){
  * the key that is pressed.
  */
 char scanKeypad(void){
-    char key = -1;
-    /*
-    char keys[ROWS][COLUMNS] = {
-    {'1','2','3'},
-    {'4','5','6'},
-    {'7','8','9'},
-    {'*','0','#'}
-    };
-     */
-    int numKeyPress = 0;
-    ROW1 = 1;
+    char key = -1; // initialize to -1 first.
+    int numKeyPress = 0; // Presses so far are zero
+
+    // Initialize row values.
+    ROW1 = 0;
     ROW2 = 1;
     ROW3 = 1;
     ROW4 = 1;
 
-    ROW1 = 0;
+    delayMs(10); // delay to set row values
+
+    // Check each individual row. if one row is pressed then the branch is taken and key is updated.
     if (COL1 == 0){
         key = '1';
         numKeyPress++;
@@ -78,8 +75,13 @@ char scanKeypad(void){
         key = '3';
         numKeyPress++;
     }
+
+    // Update to check next row.
     ROW1 = 1;
     ROW2 = 0;
+    delayMs(10); // delay to set row value
+
+    // Check each individual row. if one row is pressed then the branch is taken and key is updated.
     if (COL1 == 0){
         key = '4';
         numKeyPress++;
@@ -92,8 +94,13 @@ char scanKeypad(void){
         key = '6';
         numKeyPress++;
     }
+
+    // Update to check next row.
     ROW2 = 1;
     ROW3 = 0;
+    delayMs(10); // delay to set row value
+
+    // Check each individual row. if one row is pressed then the branch is taken and key is updated.
     if (COL1 == 0){
         key = '7';
         numKeyPress++;
@@ -106,13 +113,18 @@ char scanKeypad(void){
         key = '9';
         numKeyPress++;
     }
+
+    // Update to check next row.
     ROW3 = 1;
     ROW4 = 0;
+    delayMs(10); // delay to set row value
+
+    // Check each individual row. if one row is pressed then the branch is taken and key is updated.
     if (COL1 == 0){
         key = '*';
         numKeyPress++;
     }
-    if(COL2 == 0){
+     if(COL2 == 0){
         key = '0';
         numKeyPress++;
     }
@@ -120,11 +132,18 @@ char scanKeypad(void){
         key = '#';
         numKeyPress++;
     }
-    ROW4 = 1;
 
+    // Return Rows to their values.
+    ROW1 = 0;
+    ROW2 = 0;
+    ROW3 = 0;
+    ROW4 = 0;
+    delayMs(10); // delay to set row value
+
+    // if more than one key was pressed this branch will be taken.
     if(numKeyPress > 1){
-        return -1;
+        key = -1; // update return value.
     }
 
-    return key;
+    return key; // return key of the set {-1,1,2,3,4,5,6,7,8,9,0,#,*}
 }

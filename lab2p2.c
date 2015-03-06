@@ -26,7 +26,7 @@ typedef enum stateTypeEnum
 {
     wait,
     keyFind,
-    writeLCD,
+    writeLCDState,
     enter,
     setMode
 }stateType;
@@ -60,7 +60,7 @@ int main(void)
     
     initKeypad();
     initLCD();
-    moveCursorLCD(0,0);
+    clearLCD();
     curState = enter;
 
     while(1){
@@ -73,11 +73,11 @@ int main(void)
             //--------------KEYFIND---------------//
             case keyFind:
                 keyToWrite = scanKeypad();
-                curState = writeLCD;
+                curState = writeLCDState;
                 break;
 
             //--------------WRITELCD--------------//
-            case writeLCD:
+            case writeLCDState:
                 if (keyToWrite != -1){
                     printCharLCD(keyToWrite);
                     inputs[inputsIndex] = keyToWrite;
