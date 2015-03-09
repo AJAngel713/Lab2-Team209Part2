@@ -28,7 +28,7 @@ typedef enum stateTypeEnum
     keyFind,
     writeLCDState,
     enter,
-    setMode
+    setModeState
 }stateType;
 
 volatile stateType curState;
@@ -36,9 +36,9 @@ bool setMode = false;
 char keyToWrite = -1;
 int numOfPasswords = 1;
 char passwords[4][4] = {{'1','2','3','4'},
-                       {'x','x','x','x'},
-                       {'x','x','x','x'},
-                       {'x','x','x','x'}};
+                        {'x','x','x','x'},
+                        {'x','x','x','x'},
+                        {'x','x','x','x'}};
 char inputs[4] = {'x','x','x','x'};
 char setModeKeys[2] = {'*','*'};
 int inputsIndex = 0;
@@ -68,6 +68,10 @@ int main(void)
         {
             //--------------WAIT------------------//
             case wait:
+                ROW1 = 0;
+                ROW2 = 0;
+                ROW3 = 0;
+                ROW4 = 0;
                 break;
 
             //--------------KEYFIND---------------//
@@ -82,28 +86,30 @@ int main(void)
                     printCharLCD(keyToWrite);
                     inputs[inputsIndex] = keyToWrite;
                     inputsIndex++;
-                }
-                if (inputsIndex == 1 && !setMode){
-                    if (stringEqual(setModeKeys, inputs, 2)) curState = setMode;
-                }
-                else if (inputsIndex == 3 && !setMode){
-                    clearLCD();
-                    if (isPassword()) printStringLCD("Good");
-                    else printStringLCD("Bad");
-                    delayMs(2000);
-                }
-                // Set Mode
-                else if (setMode && inputsIndex == 3){
-                    if (isValid()){
-                        clearLCD();
-                        printStringLCD("Valid");
-                        delayMs(2000);
+                    if (inputsIndex == 2 && !setMode){
+                        if (stringEqual(setModeKeys, inputs, 2)) curState = setModeState;
                     }
-                    else {
+                    else if (inputsIndex == 4 && !setMode){
                         clearLCD();
-                        printStringLCD("Invalid");
-                        delayMs(2000);
+                        if (isPassword()) {printStringLCD("Good");}
+                        else {printStringLCD("Bad");}
+                        delay2Sec();
+                        curState = enter;
                     }
+                    // Set Mode
+                    else if (setMode && inputsIndex == 4){
+                        clearLCD();
+                        if (isValid()){
+                            printStringLCD("Valid");
+                            delay2Sec();
+                        }
+                        else {
+                            printStringLCD("Invalid");
+                            delay2Sec();
+                        }
+                        curState = enter;
+                    }
+                    if (curState == writeLCDState) curState = wait;
                 }
                 else curState = wait;
                 break;
@@ -117,7 +123,7 @@ int main(void)
                 break;
 
             //--------------SETMODE-------------//
-            case setMode:
+            case setModeState:
                 lcdSetModeState();
                 setMode = true;
                 curState = wait;
@@ -132,12 +138,21 @@ int main(void)
 
 void _ISR _CNInterrupt()
 {
-    _CNIF = 0;
-    delayMs(5);
+    _CNIF = 0;   // Always put the flag down first.
+    delayMs(10); //press/release delay
 
-    if (curState == wait){
-        curState = keyFind;
-    }
+
+    if (curState == wait){   // check what is the current state. if wait go ahead and scan keys.
+        if (COL1 == 0 || COL2 == 0 || COL3 == 0){
+//        curState = keyFind;
+            /*
+             NOTE: I can use the statement right above this, but the program breaks more often by pressing keys fast and simultaneously.
+             * By scanning the keys here in the interrupt it no longer breaks.
+             */
+            keyToWrite = scanKeypad();   // Scan keys.
+            curState = writeLCDState;         // Go to WriteLCD state.
+        } // if (COL...
+    }  // if (CurState...
 
 } // _CNInterrupt
 
@@ -149,8 +164,9 @@ void _ISR _CNInterrupt()
 bool stringEqual(char* string1, char* string2, int size)
 {
     bool result = true;
+    int i = 0;
 
-    for (int i = 0; int < size; i++){
+    for (i = 0; i < size; i++){
         if (string1[i] != string2[i]){
             result = false;
         }
@@ -165,8 +181,9 @@ bool stringEqual(char* string1, char* string2, int size)
 bool isPassword()
 {
     bool result = false;
+    int i = 0;
 
-    for (int i = 0; i < 4; i++){
+    for (i = 0; i < 4; i++){
         if (stringEqual(inputs, passwords[i], 4)){
             result = true;
             break;
@@ -184,8 +201,9 @@ bool isPassword()
  */
 bool isValid(){
     bool result = true;
+    int i = 0;
 
-    for (int i = 0; i < 4; i++){
+    for (i = 0; i < 4; i++){
         if (inputs[i] == '*' || inputs[i] == '#'){
             result = false;
         }
@@ -193,8 +211,8 @@ bool isValid(){
 
     if (result){
         numOfPasswords = numOfPasswords%4 + 1;
-        for (int i = 0; i < 4; i++){
-            passwords[numOfPasswords-1] = inputs[i];
+        for (i = 0; i < 4; i++){
+            passwords[numOfPasswords-1][i] = inputs[i];
         }
     }
     

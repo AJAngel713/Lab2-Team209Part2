@@ -37,15 +37,13 @@ void delayMs(unsigned int delay)
     TMR1 = 0; //According to the datasheet this should be reset automatically, but it does not sometimes.
     PR1 = delay*ONE_MILLISECOND; //Period register value calculated from lecture
     T1CONbits.TCKPS = 0b11; //prescalar 256
-    IFS0bits.T1IF = 0; // Timer 2 interrupt flag down
-    T1CONbits.TON = 1; // Turn timer 2 on
+    IFS0bits.T1IF = 0; // Timer 1 interrupt flag down
+    T1CONbits.TON = 1; // Turn timer 1 on
 
     // Wait until the timer 1 interrupt flag goes up. This is done in hardware.
-    while(IFS0bits.T1IF == 0);
+    while(IFS0bits.T1IF == 0){};
     IFS0bits.T1IF = 0; // Put the flag down afterwards.
-//    T1CONbits.TON = 0; // Turn the timer off so it does not keep counting.
-    unsigned int prVal = (FCY*TIME_DELAY)/PRE_SCALAR - 1; //Calcs PR val
-    PR1 = prVal; //Sets PR1 to the calculated value based on a given time delay
+    T1CONbits.TON = 0; // Turn timer 1 off
 }
 
 /*****************************************************************
@@ -66,4 +64,23 @@ void initTimer1()
     IFS0bits.T1IF = 0; // Put the interrupt flag down
     T1CONbits.TON = 1; // Turns Timer 1 on
 
+}
+
+void delay2Sec()
+{
+    TMR2 = 0; //According to the datasheet this should be reset automatically, but it does not sometimes.
+    PR2 = ONE_MILLISECOND; //Period register value calculated from lecture
+    T2CONbits.TCKPS = 0b11; //prescalar 256
+    IFS0bits.T2IF = 0; // Timer 1 interrupt flag down
+    T2CONbits.TON = 1; // Turn timer 1 on
+    // Wait until the timer 1 interrupt flag goes up. This is done in hardware.
+    int count = 0;
+    while (count < 2000){
+        while(IFS0bits.T2IF == 0){};
+        TMR1 = 0;
+        IFS0bits.T2IF = 0;
+        count++;
+    }
+    IFS0bits.T2IF = 0; // Put the flag down afterwards.
+    T2CONbits.TON = 0; // Turn timer 1 off
 }

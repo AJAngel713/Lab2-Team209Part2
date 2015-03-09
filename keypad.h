@@ -13,9 +13,6 @@
  */
 #define INPUT 1
 #define OUTPUT 0
-#define ROWS 4
-#define COLUMNS 3
-
 // ROWS   --------------------------- WRITE ONLY!!!!!
 #define ROW1 LATAbits.LATA0 // Pin 2
 #define ROW2 LATAbits.LATA1 // Pin 3

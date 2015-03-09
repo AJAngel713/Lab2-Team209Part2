@@ -166,6 +166,7 @@ void lcdEnterState()
 {
     clearLCD();
     printStringLCD("Enter");
+    moveCursorLCD(1,0);
 }
 
 /*
