@@ -60,10 +60,10 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200                0x9e            0xed  (237)
 .const                       0x29e                0x28            0x3c  (60)
-.text                        0x2c6               0x5fa           0x8f7  (2295)
-.dinit                       0x8c0                0x20            0x30  (48)
+.text                        0x2c6               0x678           0x9b4  (2484)
+.dinit                       0x93e                0x20            0x30  (48)
 
-                     Total program memory used (bytes):          0xa50  (2640) 4%
+                     Total program memory used (bytes):          0xb0d  (2829) 4%
 
 
 Data Memory  [Origin = 0x800, Length = 0x2000]
@@ -116,53 +116,53 @@ External Symbols in Program Memory (by address):
                   0x00023c                  __data_init
                   0x00029a                  __DefaultInterrupt
                   0x0002c6                  _main
-                  0x0003d0                  __CNInterrupt
-                  0x000428                  _stringEqual
-                  0x00046c                  _isPassword
-                  0x0004ac                  _isValid
-                  0x00052e                  _writeFourBits
-                  0x000584                  _writeLCD
-                  0x0005a4                  _printCharLCD
-                  0x0005b6                  _initLCD
-                  0x000610                  _printStringLCD
-                  0x000638                  _clearLCD
-                  0x000646                  _moveCursorLCD
-                  0x000678                  _lcdEnterState
-                  0x00068a                  _lcdSetModeState
-                  0x00069c                  _initKeypad
-                  0x0006c8                  _scanKeypad
-                  0x000804                  _delayUs
-                  0x000834                  _delayMs
-                  0x000864                  _initTimer1
-                  0x000880                  _delay2Sec
+                  0x00044e                  __CNInterrupt
+                  0x0004a6                  _stringEqual
+                  0x0004ea                  _isPassword
+                  0x00052a                  _isValid
+                  0x0005ac                  _writeFourBits
+                  0x000602                  _writeLCD
+                  0x000622                  _printCharLCD
+                  0x000634                  _initLCD
+                  0x00068e                  _printStringLCD
+                  0x0006b6                  _clearLCD
+                  0x0006c4                  _moveCursorLCD
+                  0x0006f6                  _lcdEnterState
+                  0x000708                  _lcdSetModeState
+                  0x00071a                  _initKeypad
+                  0x000746                  _scanKeypad
+                  0x000882                  _delayUs
+                  0x0008b2                  _delayMs
+                  0x0008e2                  _initTimer1
+                  0x0008fe                  _delay2Sec
 
 External Symbols in Program Memory (by name):
 
-                  0x0003d0                  __CNInterrupt
+                  0x00044e                  __CNInterrupt
                   0x00029a                  __DefaultInterrupt
                   0x00023c                  __data_init
                   0x00023c                  __data_init_standard
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
-                  0x000638                  _clearLCD
-                  0x000880                  _delay2Sec
-                  0x000834                  _delayMs
-                  0x000804                  _delayUs
-                  0x00069c                  _initKeypad
-                  0x0005b6                  _initLCD
-                  0x000864                  _initTimer1
-                  0x00046c                  _isPassword
-                  0x0004ac                  _isValid
-                  0x000678                  _lcdEnterState
-                  0x00068a                  _lcdSetModeState
+                  0x0006b6                  _clearLCD
+                  0x0008fe                  _delay2Sec
+                  0x0008b2                  _delayMs
+                  0x000882                  _delayUs
+                  0x00071a                  _initKeypad
+                  0x000634                  _initLCD
+                  0x0008e2                  _initTimer1
+                  0x0004ea                  _isPassword
+                  0x00052a                  _isValid
+                  0x0006f6                  _lcdEnterState
+                  0x000708                  _lcdSetModeState
                   0x0002c6                  _main
-                  0x000646                  _moveCursorLCD
-                  0x0005a4                  _printCharLCD
-                  0x000610                  _printStringLCD
-                  0x0006c8                  _scanKeypad
-                  0x000428                  _stringEqual
-                  0x00052e                  _writeFourBits
-                  0x000584                  _writeLCD
+                  0x0006c4                  _moveCursorLCD
+                  0x000622                  _printCharLCD
+                  0x00068e                  _printStringLCD
+                  0x000746                  _scanKeypad
+                  0x0004a6                  _stringEqual
+                  0x0005ac                  _writeFourBits
+                  0x000602                  _writeLCD
 
 Memory Configuration
 
@@ -250,12 +250,12 @@ __CONFIG1         0x00abfe          0x2
  .debug_abbrev    0x0001dc        0x12f build/default/production/timer.o
  .debug_abbrev    0x00030b        0x1a8 build/default/production/lab2p2.o
 
-.debug_line       0x000000        0xbab
+.debug_line       0x000000        0xc23
  *(.debug_line)
  .debug_line      0x000000        0x339 build/default/production/keypad.o
  .debug_line      0x000339        0x2cc build/default/production/lcd.o
  .debug_line      0x000605        0x214 build/default/production/timer.o
- .debug_line      0x000819        0x392 build/default/production/lab2p2.o
+ .debug_line      0x000819        0x40a build/default/production/lab2p2.o
 
 .debug_frame      0x000000        0x190
  *(.debug_frame)
@@ -331,7 +331,7 @@ __CONFIG1         0x00abfe          0x2
                   0x000034          0x4 LONG 0x29a DEFINED (__SI2C1Interrupt)?ABSOLUTE (__SI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000036          0x4 LONG 0x29a DEFINED (__MI2C1Interrupt)?ABSOLUTE (__MI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000038          0x4 LONG 0x29a DEFINED (__CompInterrupt)?ABSOLUTE (__CompInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00003a          0x4 LONG 0x3d0 DEFINED (__CNInterrupt)?ABSOLUTE (__CNInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00003a          0x4 LONG 0x44e DEFINED (__CNInterrupt)?ABSOLUTE (__CNInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00003c          0x4 LONG 0x29a DEFINED (__INT1Interrupt)?ABSOLUTE (__INT1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00003e          0x4 LONG 0x29a DEFINED (__Interrupt21)?ABSOLUTE (__Interrupt21):ABSOLUTE (__DefaultInterrupt)
                   0x000040          0x4 LONG 0x29a DEFINED (__Interrupt22)?ABSOLUTE (__Interrupt22):ABSOLUTE (__DefaultInterrupt)
@@ -459,7 +459,7 @@ __CONFIG1         0x00abfe          0x2
                   0x000134          0x4 LONG 0x29a DEFINED (__AltSI2C1Interrupt)?ABSOLUTE (__AltSI2C1Interrupt):DEFINED (__SI2C1Interrupt)?ABSOLUTE (__SI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000136          0x4 LONG 0x29a DEFINED (__AltMI2C1Interrupt)?ABSOLUTE (__AltMI2C1Interrupt):DEFINED (__MI2C1Interrupt)?ABSOLUTE (__MI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000138          0x4 LONG 0x29a DEFINED (__AltCompInterrupt)?ABSOLUTE (__AltCompInterrupt):DEFINED (__CompInterrupt)?ABSOLUTE (__CompInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00013a          0x4 LONG 0x3d0 DEFINED (__AltCNInterrupt)?ABSOLUTE (__AltCNInterrupt):DEFINED (__CNInterrupt)?ABSOLUTE (__CNInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00013a          0x4 LONG 0x44e DEFINED (__AltCNInterrupt)?ABSOLUTE (__AltCNInterrupt):DEFINED (__CNInterrupt)?ABSOLUTE (__CNInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00013c          0x4 LONG 0x29a DEFINED (__AltINT1Interrupt)?ABSOLUTE (__AltINT1Interrupt):DEFINED (__INT1Interrupt)?ABSOLUTE (__INT1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00013e          0x4 LONG 0x29a DEFINED (__AltInterrupt21)?ABSOLUTE (__AltInterrupt21):DEFINED (__Interrupt21)?ABSOLUTE (__Interrupt21):ABSOLUTE (__DefaultInterrupt)
                   0x000140          0x4 LONG 0x29a DEFINED (__AltInterrupt22)?ABSOLUTE (__AltInterrupt22):DEFINED (__Interrupt22)?ABSOLUTE (__Interrupt22):ABSOLUTE (__DefaultInterrupt)
@@ -1187,31 +1187,31 @@ __c30_signature
  .const             0x829e         0x18 build/default/production/lab2p2.o
  .const             0x82b6         0x10 build/default/production/lcd.o
 
-.text             0x0002c6        0x5fa
- .text            0x0002c6        0x268 build/default/production/lab2p2.o
+.text             0x0002c6        0x678
+ .text            0x0002c6        0x2e6 build/default/production/lab2p2.o
                   0x0002c6                  _main
-                  0x0003d0                  __CNInterrupt
-                  0x000428                  _stringEqual
-                  0x00046c                  _isPassword
-                  0x0004ac                  _isValid
- .text            0x00052e        0x16e build/default/production/lcd.o
-                  0x00052e                  _writeFourBits
-                  0x000584                  _writeLCD
-                  0x0005a4                  _printCharLCD
-                  0x0005b6                  _initLCD
-                  0x000610                  _printStringLCD
-                  0x000638                  _clearLCD
-                  0x000646                  _moveCursorLCD
-                  0x000678                  _lcdEnterState
-                  0x00068a                  _lcdSetModeState
- .text            0x00069c        0x168 build/default/production/keypad.o
-                  0x00069c                  _initKeypad
-                  0x0006c8                  _scanKeypad
- .text            0x000804         0xbc build/default/production/timer.o
-                  0x000804                  _delayUs
-                  0x000834                  _delayMs
-                  0x000864                  _initTimer1
-                  0x000880                  _delay2Sec
+                  0x00044e                  __CNInterrupt
+                  0x0004a6                  _stringEqual
+                  0x0004ea                  _isPassword
+                  0x00052a                  _isValid
+ .text            0x0005ac        0x16e build/default/production/lcd.o
+                  0x0005ac                  _writeFourBits
+                  0x000602                  _writeLCD
+                  0x000622                  _printCharLCD
+                  0x000634                  _initLCD
+                  0x00068e                  _printStringLCD
+                  0x0006b6                  _clearLCD
+                  0x0006c4                  _moveCursorLCD
+                  0x0006f6                  _lcdEnterState
+                  0x000708                  _lcdSetModeState
+ .text            0x00071a        0x168 build/default/production/keypad.o
+                  0x00071a                  _initKeypad
+                  0x000746                  _scanKeypad
+ .text            0x000882         0xbc build/default/production/timer.o
+                  0x000882                  _delayUs
+                  0x0008b2                  _delayMs
+                  0x0008e2                  _initTimer1
+                  0x0008fe                  _delay2Sec
 
-.dinit            0x0008c0         0x20
- .dinit           0x0008c0         0x20 data_init
+.dinit            0x00093e         0x20
+ .dinit           0x00093e         0x20 data_init

@@ -109,7 +109,25 @@ int main(void)
                         }
                         curState = enter;
                     }
-                    if (curState == writeLCDState) curState = wait;
+                    if (inputsIndex > 1 && curState == writeLCDState && inputs[0] == '*'){
+                        clearLCD();
+                        printStringLCD("Bad");
+                        delay2Sec();
+                        curState = enter;
+                    }
+                    else if ((keyToWrite == '#' || (keyToWrite == '*' && inputsIndex > 1)) && !setMode && curState == writeLCDState){
+                        clearLCD();
+                        printStringLCD("Bad");
+                        delay2Sec();
+                        curState = enter;
+                    }
+                    else if ((keyToWrite == '#' || keyToWrite == '*') && setMode){
+                        clearLCD();
+                        printStringLCD("Invalid");
+                        delay2Sec();
+                        curState = enter;
+                    }
+                    if (curState == writeLCDState) {curState = wait;}
                 }
                 else curState = wait;
                 break;
